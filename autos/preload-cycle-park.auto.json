@@ -1,0 +1,202 @@
+{
+  "$schema": "https://libraries.horizon36596.org/zenith/schema/v1/auto.json",
+  "formatVersion": 3,
+  "name": "preload-cycle-park",
+  "title": "Preload, cycle and park",
+  "description": "Launch the four preloaded pollen, collect four more from the RED garden in one intake pass, launch them, and park.",
+  "robot": "autos/robot.json",
+  "field": "autos/field/biobuzz.field.json",
+  "alliance": "RED",
+  "authors": [
+    "Horizon (FTC 36596)"
+  ],
+  "created": "2026-09-28",
+  "start": {
+    "pose": {
+      "ref": "start"
+    },
+    "holds": {
+      "pollen": 4
+    }
+  },
+  "steps": [
+    {
+      "id": "toShoot",
+      "kind": "path",
+      "segments": [
+        {
+          "kind": "line",
+          "from": {
+            "ref": "start"
+          },
+          "to": {
+            "ref": "shoot"
+          }
+        }
+      ],
+      "heading": {
+        "mode": "linear",
+        "fromRad": -1.5708,
+        "toRad": -2.1967
+      },
+      "notes": "Backs off the wall to the shoot spot. The launcher is at the back of the robot, so the robot turns its back to the hive on the way."
+    },
+    {
+      "id": "shootPreload",
+      "kind": "command",
+      "name": "shootAll",
+      "args": {
+        "count": 4
+      },
+      "notes": "Launches the four preloaded pollen with the default precise cadence."
+    },
+    {
+      "id": "toGarden",
+      "kind": "path",
+      "segments": [
+        {
+          "kind": "bezier",
+          "from": "current",
+          "control": [
+            {
+              "xIn": -44,
+              "yIn": -52,
+              "provenance": "PLACEHOLDER: a curve control point that leaves the shoot spot nose-first"
+            },
+            {
+              "xIn": -42,
+              "yIn": -61.5,
+              "provenance": "PLACEHOLDER: a curve control point that brings the robot level with the garden row"
+            }
+          ],
+          "to": {
+            "ref": "intakeStart"
+          }
+        }
+      ],
+      "heading": {
+        "mode": "linear",
+        "fromRad": -2.1967,
+        "toRad": -3.1416
+      },
+      "notes": "Drives to the east end of the garden row, turning as it goes, so the robot is level with the row before it gets near the wall."
+    },
+    {
+      "id": "sweepGarden",
+      "kind": "path",
+      "segments": [
+        {
+          "kind": "line",
+          "from": "current",
+          "to": {
+            "ref": "intakeEnd"
+          }
+        }
+      ],
+      "heading": {
+        "mode": "tangent"
+      },
+      "speedFraction": 0.4,
+      "markers": [
+        {
+          "at": {
+            "t": 0
+          },
+          "command": {
+            "name": "setIntake",
+            "args": {
+              "side": "FRONT",
+              "state": "FORWARD"
+            }
+          }
+        }
+      ],
+      "endCondition": {
+        "condition": "hopperFull"
+      },
+      "expect": {
+        "collectFrom": "gardenRed",
+        "count": 4
+      },
+      "notes": "Drives slowly along the garden row with the intake leading. The marker starts the intake as the path starts, and the path ends early once the hopper is full."
+    },
+    {
+      "id": "stopIntake",
+      "kind": "command",
+      "name": "setIntake",
+      "args": {
+        "side": "FRONT",
+        "state": "STOP"
+      },
+      "notes": "Stops the intake before the drive back."
+    },
+    {
+      "id": "backToShoot",
+      "kind": "path",
+      "segments": [
+        {
+          "kind": "bezier",
+          "from": "current",
+          "control": [
+            {
+              "xIn": -42,
+              "yIn": -61.5,
+              "provenance": "PLACEHOLDER: a curve control point that backs the robot off the garden row"
+            },
+            {
+              "xIn": -44,
+              "yIn": -52,
+              "provenance": "PLACEHOLDER: a curve control point that backs the robot onto the shoot spot"
+            }
+          ],
+          "to": {
+            "ref": "shoot"
+          }
+        }
+      ],
+      "heading": {
+        "mode": "linear",
+        "fromRad": -3.1416,
+        "toRad": -2.1967
+      },
+      "notes": "Backs off the garden row to the same shoot spot along the same curve, turning back as it goes."
+    },
+    {
+      "id": "shootCollected",
+      "kind": "command",
+      "name": "shootAll",
+      "args": {
+        "count": 4,
+        "cadence": "rapid"
+      },
+      "notes": "Launches the four collected pollen with the rapid cadence."
+    },
+    {
+      "id": "park",
+      "kind": "path",
+      "segments": [
+        {
+          "kind": "line",
+          "from": "current",
+          "to": {
+            "ref": "park"
+          }
+        }
+      ],
+      "heading": {
+        "mode": "tangentReversed"
+      },
+      "markers": [
+        {
+          "at": {
+            "t": 0
+          },
+          "command": {
+            "name": "launcherIdle"
+          }
+        }
+      ],
+      "notes": "Backs away from the shoot spot and parks. The marker drops the launcher to idle as the path starts."
+    }
+  ]
+}

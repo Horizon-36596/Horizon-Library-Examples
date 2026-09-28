@@ -1,0 +1,36 @@
+{
+  "$schema": "https://libraries.horizon36596.org/zenith/schema/v1/waypoints.json",
+  "formatVersion": 1,
+  "waypoints": {
+    "start": {
+      "xIn": -40,
+      "yIn": -63.5,
+      "headingRad": -1.5708,
+      "provenance": "PLACEHOLDER: against the audience wall in RED's half, intake to the wall and launcher toward the hive"
+    },
+    "shoot": {
+      "xIn": -40,
+      "yIn": -47,
+      "headingRad": -2.1967,
+      "provenance": "PLACEHOLDER: outside the legal approach margin south of the RED hive, launcher pointed at the up cell"
+    },
+    "intakeStart": {
+      "xIn": -52,
+      "yIn": -61.5,
+      "headingRad": 3.1416,
+      "provenance": "PLACEHOLDER: just short of the RED garden row, intake facing it"
+    },
+    "intakeEnd": {
+      "xIn": -60,
+      "yIn": -61.5,
+      "headingRad": 3.1416,
+      "provenance": "PLACEHOLDER: the intake over the RED garden row, frame clear of the walls"
+    },
+    "park": {
+      "xIn": -36,
+      "yIn": -36,
+      "headingRad": -1.9196,
+      "provenance": "PLACEHOLDER: an open spot in RED's half, clear of the hive and the garden, reached backing up"
+    }
+  }
+}

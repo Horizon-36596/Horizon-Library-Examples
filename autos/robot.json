@@ -1,0 +1,196 @@
+{
+  "$schema": "https://libraries.horizon36596.org/zenith/schema/v1/robot.json",
+  "formatVersion": 1,
+  "name": "example-robot",
+  "frame": {
+    "forward": "+x",
+    "left": "+y",
+    "headingZero": "+x",
+    "headingPositive": "ccw"
+  },
+  "footprint": {
+    "startIn": {
+      "lengthIn": 17,
+      "widthIn": 17,
+      "provenance": "PLACEHOLDER: a made-up square frame, about 17 by 17 in"
+    },
+    "expandedIn": {
+      "lengthIn": 17,
+      "widthIn": 17,
+      "provenance": "PLACEHOLDER: nothing extends past the frame during the auto"
+    },
+    "centreOfRotationIn": {
+      "xIn": 0,
+      "yIn": 0,
+      "provenance": "PLACEHOLDER: the middle of the frame"
+    }
+  },
+  "heightIn": {
+    "value": 16,
+    "provenance": "PLACEHOLDER: a low robot that fits under the hive pivot bar"
+  },
+  "kinematics": {
+    "maxForwardVelInPerS": {
+      "value": 70,
+      "provenance": "PLACEHOLDER: a typical mecanum top speed; set it from Pedro's forward velocity tuner"
+    },
+    "maxStrafeVelInPerS": {
+      "value": 56,
+      "provenance": "PLACEHOLDER: about 80 percent of forward, as mecanum usually is; set it from Pedro's strafe velocity tuner"
+    },
+    "forwardDecelInPerS2": {
+      "value": 80,
+      "provenance": "PLACEHOLDER: a typical coasting deceleration; set it from Pedro's forward deceleration tuner"
+    },
+    "strafeDecelInPerS2": {
+      "value": 55,
+      "provenance": "PLACEHOLDER: a typical coasting deceleration; set it from Pedro's strafe deceleration tuner"
+    },
+    "accelInPerS2": {
+      "value": 85,
+      "provenance": "PLACEHOLDER: a typical mecanum launch rate until a sim or robot run calibrates it"
+    },
+    "maxAngularVelRadPerS": {
+      "value": 6,
+      "provenance": "PLACEHOLDER: a typical mecanum turn rate"
+    },
+    "defaultPathSpeedFraction": {
+      "value": 0.85,
+      "provenance": "PLACEHOLDER: 85 percent of top speed on every path that sets none"
+    },
+    "settleS": {
+      "value": 0.15,
+      "provenance": "PLACEHOLDER: time for the follower to settle at the end of a path"
+    },
+    "follower": {
+      "library": "pedro",
+      "version": "3.0.0-20260828.185437-17",
+      "holdEnd": true
+    }
+  },
+  "mouths": [
+    {
+      "id": "front",
+      "side": "FRONT",
+      "offsetIn": {
+        "xIn": 6.5,
+        "yIn": 0
+      },
+      "widthIn": 15,
+      "depthIn": 4,
+      "provenance": "PLACEHOLDER: one roller intake across the front of the frame, flush with the front edge"
+    }
+  ],
+  "capacity": {
+    "elementKind": "pollen",
+    "max": 4,
+    "provenance": "PLACEHOLDER: the hopper holds 4 pollen, the most a BIOBUZZ robot may hold"
+  },
+  "shooter": {
+    "kind": "fixed",
+    "settleS": {
+      "value": 0.1,
+      "provenance": "PLACEHOLDER: time for the robot to stop rocking before the first launch"
+    }
+  },
+  "commands": [
+    {
+      "name": "shootAll",
+      "summary": "Spins the launcher up and launches count pollen from the hopper into the alliance's up hive cell. The launcher is fixed at the back of the robot. The precise cadence waits for the flywheel to recover between launches; rapid does not. The robot must stand still while it runs.",
+      "params": {
+        "count": {
+          "type": "integer",
+          "min": 1,
+          "max": 4
+        },
+        "cadence": {
+          "type": "enum",
+          "values": [
+            "rapid",
+            "precise"
+          ],
+          "default": "precise"
+        }
+      },
+      "estimateS": "0.35 + count * 0.08",
+      "requires": [
+        "launcher",
+        "hopper"
+      ],
+      "stationary": true,
+      "ledger": {
+        "launches": "count"
+      }
+    },
+    {
+      "name": "setIntake",
+      "summary": "Sets the intake on one side. This robot has only a front intake: FRONT and BOTH run it, BACK does nothing.",
+      "params": {
+        "side": {
+          "type": "enum",
+          "values": [
+            "FRONT",
+            "BACK",
+            "BOTH"
+          ],
+          "default": "BOTH"
+        },
+        "state": {
+          "type": "enum",
+          "values": [
+            "STOP",
+            "FORWARD",
+            "REVERSE"
+          ],
+          "default": "STOP"
+        }
+      },
+      "estimateS": "0",
+      "requires": [
+        "intake"
+      ],
+      "stationary": false
+    },
+    {
+      "name": "launcherIdle",
+      "summary": "Drops the launcher to its idle speed.",
+      "estimateS": "0",
+      "requires": [
+        "launcher"
+      ],
+      "stationary": false
+    },
+    {
+      "name": "relocalize",
+      "summary": "Re-reads the pose from the odometry computer and gives it to the follower. This robot has no camera, so the pose does not change.",
+      "estimateS": "0",
+      "requires": [
+        "drive"
+      ],
+      "stationary": false
+    },
+    {
+      "name": "cancelAll",
+      "summary": "Stops the intake, the feeder and the launcher at once.",
+      "estimateS": "0",
+      "requires": [
+        "intake",
+        "launcher",
+        "hopper"
+      ],
+      "stationary": false
+    }
+  ],
+  "conditions": [
+    {
+      "name": "hopperFull",
+      "summary": "The hopper holds 4 pollen: all four slot sensors see one.",
+      "ledger": "full"
+    },
+    {
+      "name": "hopperEmpty",
+      "summary": "The hopper holds no pollen: no slot sensor sees one.",
+      "ledger": "empty"
+    }
+  ]
+}

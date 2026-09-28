@@ -8,3 +8,6 @@ pluginManagement {
 
 include ':FtcRobotController'
 include ':TeamCode'
+
+// The name an editor shows for this project.
+rootProject.name = 'example-robot'

@@ -1,6 +1,9 @@
 repositories {
     mavenCentral()
     google() // Needed for androidx
+    maven { url = 'https://jitpack.io' }                                       // Zenith
+    maven { url = 'https://repo.dairy.foundation/releases' }                   // SolversLib
+    maven { url = 'https://central.sonatype.com/repository/maven-snapshots' }  // Pedro Pathing v3
 }
 
 dependencies {
@@ -13,5 +16,11 @@ dependencies {
     implementation 'org.firstinspires.ftc:FtcCommon:12.0.0'
     implementation 'org.firstinspires.ftc:Vision:12.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-}
 
+    // The command library, the path follower and the Zenith runtime, at the versions Zenith v0.1.1
+    // is built against. Keep the Pedro version equal to kinematics.follower.version in autos/robot.json.
+    implementation 'org.solverslib:core:0.3.6'
+    implementation 'com.pedropathing:core:3.0.0-20260828.185437-17'
+    implementation 'com.pedropathing:revhub:3.0.0' // Pedro's mecanum drive and Pinpoint localizer
+    implementation 'com.github.Horizon-36596:zenith:v0.1.1'
+}
