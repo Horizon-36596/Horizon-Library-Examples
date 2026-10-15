@@ -21,6 +21,6 @@ dependencies {
     // is built against. Keep the Pedro version equal to kinematics.follower.version in autos/robot.json.
     implementation 'org.solverslib:core:0.3.6'
     implementation 'com.pedropathing:core:3.0.0-20260828.185437-17'
-    implementation 'com.pedropathing:revhub:3.0.0' // Pedro's mecanum drive and Pinpoint localizer
+    implementation 'com.pedropathing:revhub:3.0.0-20260828.185437-17' // Pedro's mecanum drive and Pinpoint localizer, the same build as core
     implementation 'com.github.Horizon-36596:zenith:v0.1.1'
 }
