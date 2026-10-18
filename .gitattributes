@@ -1,0 +1,6 @@
+# Zenith hashes the auto files byte for byte, and the deploy test compares the
+# copies in TeamCode assets with the sources. Keep them LF on every OS so a
+# Windows checkout with core.autocrlf=true hashes the same as everyone else.
+*.json text eol=lf
+autos/** text eol=lf
+TeamCode/src/main/assets/autos/** text eol=lf
