@@ -44,6 +44,8 @@ root. A season repository can use the same layout. In the table, `TeamCode/...` 
 | `TeamCode/.../teleop/` | The **Driver Control** TeleOp, and `DriverControls`, the one place its buttons are bound. |
 | `TeamCode/.../opmodes/` | **Choose alliance**, which sets the alliance the autos run as. |
 | `TeamCode/src/test/` | Unit tests, including one that loads the auto through the Zenith runtime and runs it. |
+| `TeamCode/src/test/.../sim/` | The Full sim: the robot's fake hardware in SimLoop, and the test that runs an auto against it. |
+| `simloop-starter/` | SimLoop's starter folder, copied unchanged. `TeamCode/build.gradle` applies its `simloop.gradle`. |
 
 To build and test the robot code you need Android Studio, or JDK 17 and an Android SDK:
 
@@ -53,7 +55,8 @@ To build and test the robot code you need Android Studio, or JDK 17 and an Andro
 ```
 
 `build.dependencies.gradle` adds Zenith v0.1.1, SolversLib 0.3.6 and Pedro Pathing v3 next to the FTC
-SDK.
+SDK. `simloop-starter/simloop.gradle` adds SimLoop v0.2.0-alpha.1 for the unit tests only, so none of it
+goes into the APK.
 
 ## Open it in Zenith
 
@@ -78,6 +81,29 @@ npx @horizon36596/zenith-cli@0.1.1 codegen autos/preload-cycle-park.auto.json
 
 [Getting started](https://libraries.horizon36596.org/zenith/getting-started/) covers the editor, and
 [Robot runtime](https://libraries.horizon36596.org/zenith/robot-runtime/) covers the Java side.
+
+## Run it in the Full sim
+
+Zenith's estimate adds up a time for each step. The Full sim runs the real robot code instead: the
+generated OpMode, `ExampleRobot`, the four subsystems, Pedro's follower and the SolversLib scheduler,
+on your computer, against fake hardware. [SimLoop](https://libraries.horizon36596.org/simloop/) runs the
+OpMode, and `ExampleRobotSim` gives it the fake devices and a mecanum plant to drive. Its physical
+numbers are placeholders too, marked `PLACEHOLDER`.
+
+`zenith.json`'s `sim` block tells Zenith how to run it. From a terminal:
+
+```sh
+npx @horizon36596/zenith-cli@0.1.1 sim preload-cycle-park
+```
+
+This runs `ZenithAutoHeadlessTest` for that one auto, for the 30 s autonomous period plus 2 s. The test
+writes `TeamCode/build/sim/preload-cycle-park.trace.json`, and Zenith prints its estimate next to the
+time each step took in the sim. The same test also runs in `./gradlew :TeamCode:testDebugUnitTest`,
+for every auto, and fails if a step is interrupted or the auto does not finish inside the period.
+
+SimLoop comes from JitPack, so the first build downloads it. To drive your own robot in the Full sim,
+start from SimLoop's [starter README](simloop-starter/README.md), then copy `ExampleRobotSim` and
+`ZenithAutoHeadlessTest` and give them your robot's devices and measured numbers.
 
 ## Commands and conditions
 
