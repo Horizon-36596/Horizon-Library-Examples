@@ -26,6 +26,16 @@ android {
     testOptions {
         unitTests.all {
             useJUnitPlatform()
+
+            // Zenith's high-fidelity sim (zenith.json's sim.command) names the auto to run with
+            // -Dzenith.auto=<auto>. Gradle does not pass its own -D options into the test JVM, so this
+            // does. A named run always runs, even when nothing Gradle tracks has changed, because the auto
+            // files it reads are not task inputs and the trace has to come from the file as it is now.
+            def zenithAuto = System.getProperty('zenith.auto')
+            if (zenithAuto) {
+                systemProperty 'zenith.auto', zenithAuto
+                outputs.upToDateWhen { false }
+            }
         }
     }
 }
@@ -37,3 +47,5 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.3'
 }
+
+apply from: "$rootDir/simloop-starter/simloop.gradle"
