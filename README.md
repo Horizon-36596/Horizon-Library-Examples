@@ -56,7 +56,7 @@ To build and test the robot code you need Android Studio, or JDK 17 and an Andro
 ./gradlew :TeamCode:testDebugUnitTest
 ```
 
-`build.dependencies.gradle` adds Zenith v0.1.1, SolversLib 0.3.6 and Pedro Pathing v3 next to the FTC
+`build.dependencies.gradle` adds Zenith v0.1.2, SolversLib 0.3.6 and Pedro Pathing v3 next to the FTC
 SDK. `simloop-starter/simloop.gradle` adds SimLoop v0.2.0-alpha.1 for the unit tests only, so none of it
 goes into the APK.
 
@@ -69,16 +69,16 @@ Zenith opens this folder as a robot project, because `zenith.json` is at its roo
 - From a terminal, with Node 22 or newer:
 
 ```sh
-npx @horizon36596/zenith-cli@0.1.1 validate autos/preload-cycle-park.auto.json
-npx @horizon36596/zenith-cli@0.1.1 estimate autos/preload-cycle-park.auto.json
+npx @horizon36596/zenith-cli@0.1.2 validate autos/preload-cycle-park.auto.json
+npx @horizon36596/zenith-cli@0.1.2 estimate autos/preload-cycle-park.auto.json
 ```
 
 After you change a file in `autos/`, run `zenith deploy` and `zenith codegen` again so the copies in
 TeamCode match:
 
 ```sh
-npx @horizon36596/zenith-cli@0.1.1 deploy
-npx @horizon36596/zenith-cli@0.1.1 codegen autos/preload-cycle-park.auto.json
+npx @horizon36596/zenith-cli@0.1.2 deploy
+npx @horizon36596/zenith-cli@0.1.2 codegen autos/preload-cycle-park.auto.json
 ```
 
 [Getting started](https://libraries.horizon36596.org/zenith/getting-started/) covers the editor, and
@@ -95,7 +95,7 @@ numbers are placeholders too, marked `PLACEHOLDER`.
 `zenith.json`'s `sim` block tells Zenith how to run it. From a terminal:
 
 ```sh
-npx @horizon36596/zenith-cli@0.1.1 sim preload-cycle-park
+npx @horizon36596/zenith-cli@0.1.2 sim preload-cycle-park
 ```
 
 This runs `ZenithAutoHeadlessTest` for that one auto, for the 30 s autonomous period plus 2 s. The test
