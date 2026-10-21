@@ -1,9 +1,9 @@
 {
   "$schema": "https://libraries.horizon36596.org/zenith/schema/v1/auto.json",
-  "formatVersion": 3,
+  "formatVersion": 4,
   "name": "preload-cycle-park",
   "title": "Preload, cycle and park",
-  "description": "Launch the four preloaded pollen, collect four more from the RED garden in one intake pass, launch them, and park.",
+  "description": "Launch the four preloaded pollen from south of the RED hive, collect four more from the RED garden in one intake pass, launch them from north of the hive once it has tipped, and park.",
   "robot": "autos/robot.json",
   "field": "autos/field/biobuzz.field.json",
   "alliance": "RED",
@@ -30,7 +30,7 @@
             "ref": "start"
           },
           "to": {
-            "ref": "shoot"
+            "ref": "shootSouth"
           }
         }
       ],
@@ -39,7 +39,7 @@
         "fromRad": -1.5708,
         "toRad": -2.1967
       },
-      "notes": "Backs off the wall to the shoot spot. The launcher is at the back of the robot, so the robot turns its back to the hive on the way."
+      "notes": "Backs off the wall to the shoot spot south of the hive, where the hive's up cell faces at the start. The launcher is at the back of the robot, so the robot turns its back to the hive on the way."
     },
     {
       "id": "shootPreload",
@@ -48,7 +48,7 @@
       "args": {
         "count": 4
       },
-      "notes": "Launches the four preloaded pollen with the default precise cadence."
+      "notes": "Launches the four preloaded pollen with the default precise cadence. Three pollen on top of the three red nectar tip the hive, so its up cell now faces north."
     },
     {
       "id": "toGarden",
@@ -131,35 +131,48 @@
       "notes": "Stops the intake before the drive back."
     },
     {
-      "id": "backToShoot",
+      "id": "toShootNorth",
       "kind": "path",
       "segments": [
         {
-          "kind": "bezier",
+          "kind": "line",
           "from": "current",
-          "control": [
-            {
-              "xIn": -42,
-              "yIn": -61.5,
-              "provenance": "PLACEHOLDER: a curve control point that backs the robot off the garden row"
-            },
-            {
-              "xIn": -44,
-              "yIn": -52,
-              "provenance": "PLACEHOLDER: a curve control point that backs the robot onto the shoot spot"
-            }
-          ],
           "to": {
-            "ref": "shoot"
+            "ref": "shootNorth"
           }
         }
       ],
       "heading": {
-        "mode": "linear",
-        "fromRad": -3.1416,
-        "toRad": -2.1967
+        "mode": "piecewise",
+        "ranges": [
+          {
+            "startT": 0,
+            "endT": 0.15,
+            "heading": {
+              "mode": "linear",
+              "fromRad": 3.1416,
+              "toRad": 1.3885
+            }
+          },
+          {
+            "startT": 0.15,
+            "endT": 0.85,
+            "heading": {
+              "mode": "tangent"
+            }
+          },
+          {
+            "startT": 0.85,
+            "endT": 1,
+            "heading": {
+              "mode": "linear",
+              "fromRad": 1.3885,
+              "toRad": 2.1967
+            }
+          }
+        ]
       },
-      "notes": "Backs off the garden row to the same shoot spot along the same curve, turning back as it goes."
+      "notes": "Drives up the west side of the field, clear of the hive, to the shoot spot north of it. The hive tipped on the first shot, so its up cell can only be scored from this side now."
     },
     {
       "id": "shootCollected",
@@ -169,7 +182,7 @@
         "count": 4,
         "cadence": "rapid"
       },
-      "notes": "Launches the four collected pollen with the rapid cadence."
+      "notes": "Launches the four collected pollen into the up cell, now the north one, with the rapid cadence."
     },
     {
       "id": "park",
@@ -196,7 +209,7 @@
           }
         }
       ],
-      "notes": "Backs away from the shoot spot and parks. The marker drops the launcher to idle as the path starts."
+      "notes": "Backs away from the north shoot spot and parks. The marker drops the launcher to idle as the path starts."
     }
   ]
 }

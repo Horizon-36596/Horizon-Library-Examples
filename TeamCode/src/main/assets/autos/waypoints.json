@@ -8,11 +8,17 @@
       "headingRad": -1.5708,
       "provenance": "PLACEHOLDER: against the audience wall in RED's half, intake to the wall and launcher toward the hive"
     },
-    "shoot": {
+    "shootSouth": {
       "xIn": -40,
       "yIn": -47,
       "headingRad": -2.1967,
       "provenance": "PLACEHOLDER: outside the legal approach margin south of the RED hive, launcher pointed at the up cell"
+    },
+    "shootNorth": {
+      "xIn": -40,
+      "yIn": 47,
+      "headingRad": 2.1967,
+      "provenance": "SET BY HAND 2026-10-20: shootSouth mirrored north of the RED hive, for once the hive has tipped and its up cell faces north; the same range to the up cell, launcher pointed at it"
     },
     "intakeStart": {
       "xIn": -52,
@@ -28,9 +34,9 @@
     },
     "park": {
       "xIn": -36,
-      "yIn": -36,
-      "headingRad": -1.9196,
-      "provenance": "PLACEHOLDER: an open spot in RED's half, clear of the hive and the garden, reached backing up"
+      "yIn": 36,
+      "headingRad": 1.9196,
+      "provenance": "SET BY HAND 2026-10-20: an open spot in RED's half north of the hive, clear of the hive and the loading zone, reached backing up from shootNorth"
     }
   }
 }

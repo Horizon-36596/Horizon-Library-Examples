@@ -18,9 +18,11 @@ turret. It follows paths with Pedro Pathing v3 and runs its commands on SolversL
 reason, and so are the constants in the Java. Measure your own robot before you copy any of them.
 
 The one auto, `preload-cycle-park`, starts against the audience wall in RED's half. It launches the
-four preloaded pollen, collects four more from the RED garden in one intake pass, launches those, and
-parks. Zenith estimates it at 6.8 s of the 30 s autonomous period. When it ends, the Driver Station
-selects the **Driver Control** TeleOp, which drives the same subsystems by hand.
+four preloaded pollen from south of the RED hive, which tips the hive so its up cell faces north. It
+then collects four more from the RED garden in one intake pass, drives up the west side to launch
+those from north of the hive, and parks. Zenith estimates it at 8.1 s of the 30 s autonomous period.
+When it ends, the Driver Station selects the **Driver Control** TeleOp, which drives the same
+subsystems by hand.
 
 ## How this repository is laid out
 
