@@ -92,7 +92,7 @@ class PreloadCycleParkAutoTest {
 
         assertTrue(tookS < AUTO_PERIOD_S, "took " + tookS + " s");
         assertEquals(Arrays.asList("toShoot", "shootPreload", "toGarden", "sweepGarden", "stopIntake",
-                "backToShoot", "shootCollected", "park"), auto.startedSteps);
+                "toShootNorth", "shootCollected", "park"), auto.startedSteps);
         assertEquals(IntakeSubsystem.State.STOP, intake.frontState());
         assertFalse(launcher.ready(), "the park marker drops the launcher to idle");
     }
